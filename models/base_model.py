@@ -30,7 +30,7 @@ def __init__(self, *args, **kwargs):
             else:
                 self.__dict__[key] = kwargs[key]
     else:
-        stroge.new(self)
+        storage.new(self)
 
 def __str__(self):
     """function that prints content of BaseModel with the following format
@@ -47,7 +47,7 @@ def to_dict(self):
     """returns a dictionary containing all keys/values of __dict__ of the instance
     """
     dict_me = self.__dict__.copy()
-    dict_me["__class__"] = self.__name__
+    dict_me["__class__"] = type(self).__name__
     dict_me["created_at"] = self.created_at.isoformat()
     dict_me["updated_at"] = self.updated_at.isoformat()
 
