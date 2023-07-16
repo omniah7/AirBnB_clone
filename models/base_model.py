@@ -28,7 +28,7 @@ def __init__(self, *args, **kwargs):
                 """converting to dictionary key with the given value of the time string"""
                 self.__dict__[key] = datetime.strptime(value, ISO_format)
             else:
-            self.__dict__[key] = kwargs[key]
+                self.__dict__[key] = kwargs[key]
     else:
         stroge.new(self)
 
@@ -36,7 +36,7 @@ def __str__(self):
     """function that prints content of BaseModel with the following format
     [<class name>] (<self.id>) <self.__dict__>"""
     return "[{}] ({}) {}".\
-        format.(type(self).__name__, self.id, self.__dict__)
+        format(type(self).__name__, self.id, self.__dict__)
 
 def save(self):
     """updates the public instance attribute updated_at with the current datetime"""
@@ -51,4 +51,4 @@ def to_dict(self):
     dict_me["created_at"] = self.created_at.isoformat()
     dict_me["updated_at"] = self.updated_at.isoformat()
 
-return dict_me
+    return dict_me
