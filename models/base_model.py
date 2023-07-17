@@ -19,16 +19,18 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-        ISO_format = "%Y-%m-%dT%H:%M:%S.%f"
+
 
         if kwargs is not None and kwargs != {}:
-            for key, value in kwargs.items():
-                """loops through key and its values"""
-                if key == "created_at" or key == "updated_at":
-                    """converting to dictionary key with the given value of the time string"""
-                    self.__dict__[key] = datetime.strptime(value, ISO_format)
+            for key in kwargs:
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(
+                        kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(
+                        kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
                 else:
-                    self.__dict__[key] = value
+                    self.__dict__[key] = kwargs[key]
         else:
             storage.new(self) 
             pass
