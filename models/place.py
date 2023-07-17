@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-"""Place module that contains attribues assigned to places 
+"""Place module that contains attribues assigned to places
 and it inherits from BaseModel class"""
 
 from models.base_model import BaseModel
+
 
 class Place(BaseModel):
     """Place class containing its various public class atrributes"""

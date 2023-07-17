@@ -4,6 +4,7 @@ and inherits from BaseModel class"""
 
 from models.base_model import BaseModel
 
+
 class State(BaseModel):
     """Attributes of state class"""
 

@@ -5,6 +5,7 @@ from datetime import datetime
 from models import storage
 import uuid
 
+
 class BaseModel:
     """Subclass from which various classes inherit from and also
     it will be the first piece of the serialization/deserialization process
@@ -20,7 +21,6 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
-
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key == "created_at":
@@ -32,21 +32,24 @@ class BaseModel:
                 else:
                     self.__dict__[key] = kwargs[key]
         else:
-            storage.new(self) 
+            storage.new(self)
             pass
 
     def __str__(self):
         """function that prints content of BaseModel with the following format
         [<class name>] (<self.id>) <self.__dict__>"""
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(type(self).__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
-        """updates the public instance attribute updated_at with the current datetime"""
+        """updates the public instance attribute
+        updated_at with the current datetime"""
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__ of the instance
+        """returns a dictionary containing all
+        keys/values of __dict__ of the instance
         """
         dict_me = self.__dict__.copy()
         dict_me["__class__"] = type(self).__name__

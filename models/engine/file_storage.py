@@ -2,6 +2,7 @@ import datetime
 import os
 import json
 
+
 class FileStorage:
     """class for storing, retrieving and manipulating data"""
     __file_path = "file.json"
@@ -18,7 +19,8 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, mode="w", encoding="utf-8") as my_file:
+        with open(FileStorage.__file_path, mode="w",
+                  encoding="utf-8") as my_file:
             d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
             json.dump(d, my_file)
 
@@ -33,20 +35,23 @@ class FileStorage:
         from models.review import Review
 
         classes = {"BaseModel": BaseModel,
-                "User": User,
-                "City": City,
-                "Amenity": Amenity,
-                "Place": Place,
-                "Review": Review}
+                   "User": User,
+                   "City": City,
+                   "Amenity": Amenity,
+                   "Place": Place,
+                   "Review": Review}
         return classes
 
     def reload(self):
-        """ deserializes the JSON file to __objects (only if the JSON file (__file_path) exists ;
-        otherwise, do nothing. If the file doesn’t exist, no exception should be raised
+        """ deserializes the JSON file to __objects (only if the
+        JSON file (__file_path) exists ;
+        otherwise, do nothing. If the file doesn’t exist,
+        no exception should be raised
         """
         if not os.path.isfile(FileStorage.__file_path):
             return
-        with open(FileStorage.__file_path, mode="r", encoding="utf-8") as my_file:
+        with open(FileStorage.__file_path, mode="r",
+                  encoding="utf-8") as my_file:
             obj_dict = json.load(my_file)
             obj_dict = {k: self.classes()[v["__class__"]](**v)
                         for k, v in obj_dict.items()}
@@ -95,4 +100,3 @@ class FileStorage:
             }
         }
         return attributes
-
