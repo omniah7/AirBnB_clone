@@ -108,7 +108,11 @@ class HBNBCommand(cmd.Cmd):
         """ Updates an instance based on the class name and id by
         adding or updating attribute and saves to the JSON file"""
         args = parse(line)
+
         if len(args) >= 4:
+            if args[0] not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
             key = "{}.{}".format(args[0], args[1])
             if key not in storage.all().keys():
                 print("** no instance found **")
@@ -121,8 +125,6 @@ class HBNBCommand(cmd.Cmd):
             storage.all()[key].save()
         elif len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
         elif len(args) == 2:
@@ -134,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         """Display count of instances for specified class"""
         if line in HBNBCommand.classes:
             count = 0
-            for key in storage.all().items():
+            for key in storage.all().keys():
                 if line in key:
                     count += 1
             print(count)
@@ -170,18 +172,33 @@ class HBNBCommand(cmd.Cmd):
                 arg = class_arg + ' ' + id_arg
                 HBNBCommand.do_destroy(self, arg)
             elif command == 'update':
-                args = args[1].split(',')
+                # split the first item ("123-id") in
+                # ex("123-id", {'first_name': "John", "age": 89}))
+                args = args[1].split(',', 1)
                 id_arg = args[0].strip("'")
                 id_arg = id_arg.strip('"')
-                name_arg = args[1].strip(',')
-                val_arg = args[2]
-                name_arg = name_arg.strip(' ')
-                name_arg = name_arg.strip("'")
-                name_arg = name_arg.strip('"')
-                val_arg = val_arg.strip(' ')
-                val_arg = val_arg.strip(')')
-                arg = class_arg + ' ' + id_arg + ' ' + name_arg + ' ' + val_arg
-                HBNBCommand.do_update(self, arg)
+                # assign the new args to the rest of the line
+                # ex: {'first_name': "John", "age": 89})
+                args = args[1].strip(' ')
+                # if the first char is '{'
+                if (args[0] == '{'):
+                    # args = args.strip('{}')
+                    dic = eval(args.strip('()'))
+                    for k, v in dic.items():
+                        arg = f"{class_arg} {id_arg} {k} \"{v}\""
+                        print(f"type is {type(v)}")
+                        HBNBCommand.do_update(self, arg)
+                else:
+                    name_arg = args.strip(',')
+                    val_arg = args[1]
+                    name_arg = name_arg.strip(' ')
+                    name_arg = name_arg.strip("'")
+                    name_arg = name_arg.strip('"')
+                    val_arg = val_arg.strip(' ')
+                    val_arg = val_arg.strip(')')
+                    arg = class_arg + ' ' + id_arg +\
+                        ' ' + name_arg + ' ' + val_arg
+                    HBNBCommand.do_update(self, arg)
 
             else:
                 print("*** Unknown syntax: {}".format(line))

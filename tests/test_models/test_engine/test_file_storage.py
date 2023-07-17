@@ -21,6 +21,10 @@ class test_FileStorage(unittest.TestCase):
         self.assertTrue(hasattr(storage, "_FileStorage__file_path"))
         self.assertTrue(isinstance(storage._FileStorage__file_path, str))
 
+    def test_methods(self):
+        """tests for reload"""
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()
