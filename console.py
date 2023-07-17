@@ -21,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
                "Amenity", "Place", "Review", "User"}
 
     def do_EOF(self, line):
-        """Exit command-line interreter when  Ctrl-D is typed"""
+        """Exit command-line interpreter when  Ctrl-D is typed"""
         print()
         return True
 
@@ -94,12 +94,12 @@ class HBNBCommand(cmd.Cmd):
         obj_list = []
         if len(line) == 0:
             for objs in storage.all().values():
-                obj_list.append(objs)
+                obj_list.append(str(objs))
             print(obj_list)
         elif args[0] in HBNBCommand.classes:
             for key, objs in storage.all().items():
                 if args[0] in key:
-                    obj_list.append(objs)
+                    obj_list.append(str(objs))
             print(obj_list)
         else:
             print("** class doesn't exist **")
@@ -110,6 +110,9 @@ class HBNBCommand(cmd.Cmd):
         args = parse(line)
         if len(args) >= 4:
             key = "{}.{}".format(args[0], args[1])
+            if key not in storage.all().keys():
+                print("** no instance found **")
+                return
             cast = type(eval(args[3]))
             arg3 = args[3]
             arg3 = arg3.strip('"')
@@ -122,8 +125,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif ("{}.{}".format(args[0], args[1])) not in storage.all().keys():
-            print("** no instance found **")
         elif len(args) == 2:
             print("** attribute name missing **")
         else:
@@ -133,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         """Display count of instances for specified class"""
         if line in HBNBCommand.classes:
             count = 0
-            for key, objs in storage.all().items():
+            for key in storage.all().items():
                 if line in key:
                     count += 1
             print(count)
@@ -181,6 +182,7 @@ class HBNBCommand(cmd.Cmd):
                 val_arg = val_arg.strip(')')
                 arg = class_arg + ' ' + id_arg + ' ' + name_arg + ' ' + val_arg
                 HBNBCommand.do_update(self, arg)
+
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
