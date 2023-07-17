@@ -30,11 +30,13 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """Override the default behavior to execute last cmd for an empty line"""
+        """Override the default behavior to execute
+        last cmd for an empty line"""
         pass
 
     def do_create(self, line):
-        """Create instance specified class specified by user and saves it to JSON file"""
+        """Create instance specified class specified
+        by user and saves it to JSON file"""
         if len(line) == 0:
             print("** class name missing **")
         elif line not in HBNBCommand.classes:
@@ -45,7 +47,8 @@ class HBNBCommand(cmd.Cmd):
             print(instance.id)
 
     def do_show(self, line):
-        """Print string representation based on the class  name and instance id"""
+        """Print string representation based on the
+        class name and instance id"""
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -64,7 +67,8 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and idand  Saves changes to JSON file"""
+        """Deletes an instance based on the class name
+        and idand  Saves changes to JSON file"""
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -84,7 +88,8 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not on the class name."""
+        """Prints all string representation of all instances
+        based or not on the class name."""
         args = parse(line)
         obj_list = []
         if len(line) == 0:
@@ -100,7 +105,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
-        """ Updates an instance based on the class name and id by adding or updating attribute and saves to the JSON file"""
+        """ Updates an instance based on the class name and id by
+        adding or updating attribute and saves to the JSON file"""
         args = parse(line)
         if len(args) >= 4:
             key = "{}.{}".format(args[0], args[1])
