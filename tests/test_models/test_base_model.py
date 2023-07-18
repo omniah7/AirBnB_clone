@@ -41,7 +41,7 @@ class test_BaseModel(unittest.TestCase):
         self.assertIsInstance(obj.updated_at, datetime)
 
     def test_attributes(self):
-        """Tests for attriutes"""
+        """Tests for attributes"""
         obj1 = BaseModel()
         self.assertTrue(hasattr(obj1, "id"))
         self.assertTrue(hasattr(obj1, "created_at"))
