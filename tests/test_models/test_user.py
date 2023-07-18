@@ -1,8 +1,6 @@
 """Test User"""
 
 import unittest
-from models import storage
-from models.base_model import BaseModel
 from models.user import User
 
 
@@ -23,6 +21,10 @@ class test_User(unittest.TestCase):
         self.assertTrue(hasattr(my_user, 'last_name'))
         self.assertTrue(hasattr(my_user, 'email'))
         self.assertTrue(hasattr(my_user, 'password'))
+        self.assertIsInstance(my_user.first_name, str)
+        self.assertIsInstance(my_user.last_name, str)
+        self.assertIsInstance(my_user.email, str)
+        self.assertIsInstance(my_user.password, str)
         my_user.first_name = "Betty"
         my_user.last_name = "Bar"
         my_user.email = "airbnb@mail.com"
