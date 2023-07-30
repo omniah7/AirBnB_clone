@@ -1,4 +1,4 @@
-.places {
+.places h1 {
     font-size: 30px;
 }
 .places article {
@@ -10,6 +10,6 @@
     text-align: center;
     display: inline-block;
 }
-.places h2{
-    margin: 0;
+.places article h2{
+    font-size: 30px;
 }
